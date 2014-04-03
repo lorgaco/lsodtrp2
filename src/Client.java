@@ -16,7 +16,7 @@ public class Client {
 		try {
 
 			//Ojo, cambiar ese 4000 por un número de puerto propio
-			EcoRMI miEco = (EcoRMI)Naming.lookup("rmi://" + args[0] + ":" +  + "/" + "mi-EcoRMI");
+			EcoRMI miEco = (EcoRMI)Naming.lookup("rmi://" + args[0] + ":" + Data.PORT + "/" + "mi-EcoRMI");
 
 			// hace un bucle hasta el fin de la entrada
 			System.out.print("Eco> ");
