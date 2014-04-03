@@ -13,28 +13,28 @@ public class ServantRMI extends UnicastRemoteObject implements InterfaceRMI{
 			e.printStackTrace();
 		}
 	}
-	public int nuevo(String designation, int maximum) throws RemoteException {
+	public Answer nuevo(String designation, int maximum) throws RemoteException {
 		return Methods.nuevo(designation, maximum);
 	}
-	public int quita(short code) throws RemoteException {
+	public Answer quita(short code) throws RemoteException {
 		return Methods.quita(code);
 	}
-	public int inscribe(String name, String alias) throws RemoteException {
+	public Answer inscribe(String name, String alias) throws RemoteException {
 		return Methods.inscribe(name, alias);
 	}
-	public String plantilla() throws RemoteException {
+	public Answer plantilla() throws RemoteException {
 		return Methods.plantilla();
 	}
-	public int repertorio(byte minimum) throws RemoteException {
+	public Answer repertorio(byte minimum) throws RemoteException {
 		return Methods.repertorio(minimum);
 	}
-	public int juega(String alias, short code) throws RemoteException {
+	public Answer juega(String alias, short code) throws RemoteException {
 		return Methods.juega(alias, code);
 	}
-	public int termina(String alias, short code) throws RemoteException {
+	public Answer termina(String alias, short code) throws RemoteException {
 		return Methods.termina(alias, code);
 	}
-	public int lista(short code) throws RemoteException {
+	public Answer lista(short code) throws RemoteException {
 		return Methods.lista(code);
 	}
 }

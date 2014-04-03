@@ -43,7 +43,7 @@ public class Client {
 								designation = designation + " " + strComand[i].toString();
 							}
 							int maximum = Integer.parseInt(strComand[strComand.length-1]);
-							int result = ModuleRMI.nuevo(designation, maximum);
+							Answer result = ModuleRMI.nuevo(designation, maximum);
 							System.out.println(result);
 						}
 					}
@@ -51,7 +51,7 @@ public class Client {
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
 							short code = Short.parseShort(strComand[1].toString());
-							int result = ModuleRMI.quita(code);
+							Answer result = ModuleRMI.quita(code);
 							System.out.println(result);
 						}
 					}
@@ -60,19 +60,19 @@ public class Client {
 						else{
 							String name = strComand[1].toString();
 							String alias = strComand[2].toString();
-							int result = ModuleRMI.inscribe(name, alias);
+							Answer result = ModuleRMI.inscribe(name, alias);
 							System.out.println(result);
 						}
 					}
 					else if(method.equals("PLANTILLA")){
-							String result = ModuleRMI.plantilla();
-							System.out.println(result);
+						Answer result = ModuleRMI.plantilla();
+						System.out.println(result);
 					}
 					else if(method.equals("REPERTORIO")){
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
 							byte minimum = Byte.parseByte(strComand[1].toString());
-							int result = ModuleRMI.repertorio(minimum);
+							Answer result = ModuleRMI.repertorio(minimum);
 							System.out.println(result);
 						}
 					}
@@ -81,7 +81,7 @@ public class Client {
 						else{
 							String alias = strComand[1].toString();
 							short code = Short.parseShort(strComand[2].toString());
-							int result = ModuleRMI.juega(alias, code);
+							Answer result = ModuleRMI.juega(alias, code);
 							System.out.println(result);
 						}
 					}
@@ -90,7 +90,7 @@ public class Client {
 						else{
 							String alias = strComand[1].toString();
 							short code = Short.parseShort(strComand[2].toString());
-							int result = ModuleRMI.termina(alias, code);
+							Answer result = ModuleRMI.termina(alias, code);
 							System.out.println(result);
 						}
 					}
@@ -98,7 +98,7 @@ public class Client {
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
 							short code = Short.parseShort(strComand[1].toString());
-							int result = ModuleRMI.lista(code);
+							Answer result = ModuleRMI.lista(code);
 							System.out.println(result);
 						}
 					}
