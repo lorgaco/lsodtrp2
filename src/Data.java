@@ -1,7 +1,7 @@
 
 public class Data {
 	// socket and message parameters
-	public static final int PORT = 4005;
+	public static final int PORT = 4555;
 	public static final int MAX_ARGUMENTS_SIZE = 8000;
 	public static final int MAX_MESSAGE_SIZE = MAX_ARGUMENTS_SIZE + 16; // 4 ints
 	public static final int SOCKET_TIMEOUT = 1000; // in milliseconds
