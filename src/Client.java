@@ -79,7 +79,10 @@ public class Client {
                         if(strComand.length<3) System.err.println("Not enough arguments");
                         else{
                             String name = strComand[1].toString();
-                            String alias = strComand[2].toString();
+                            for(int i = 2; i < strComand.length-1; i++) {
+                                name = name + " " + strComand[i].toString();
+                            }
+                            String alias = strComand[strComand.length-1].toString();
                             Answer Response = ModuleRMI.inscribe(name, alias);
                             int iError = Response.getError();
                             int iServerError = Response.getServer_error();
