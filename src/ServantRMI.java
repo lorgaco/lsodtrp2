@@ -3,6 +3,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class ServantRMI extends UnicastRemoteObject implements InterfaceRMI{
 	Methods Method;
+    String key_server;
 
 	public ServantRMI(String name, String Key) throws RemoteException {
 		super();
@@ -13,18 +14,34 @@ public class ServantRMI extends UnicastRemoteObject implements InterfaceRMI{
 			e.printStackTrace();
 		}
 		Method = new Methods();
+        key_server = Key;
 	}
-	public Answer nuevo(String designation, int maximum) throws RemoteException {
-		return Method.nuevo(designation, maximum);
+	public Answer nuevo(String designation, int maximum, String key_client) throws RemoteException {
+        Answer answer = new Answer();
+        if(key_client.equals(key_server))
+            answer = Method.nuevo(designation, maximum);
+        else
+            answer.setError(Data.AUTENTICATION_FAILED);
+		return answer;
 	}
-	public Answer quita(short code) throws RemoteException {
-		return Method.quita(code);
+	public Answer quita(short code, String key_client) throws RemoteException {
+        Answer answer = new Answer();
+        if(key_client.equals(key_server))
+            answer = Method.quita(code);
+        else
+            answer.setError(Data.AUTENTICATION_FAILED);
+		return answer;
 	}
 	public Answer inscribe(String name, String alias) throws RemoteException {
 		return Method.inscribe(name, alias);
 	}
-	public Answer plantilla() throws RemoteException {
-		return Method.plantilla();
+	public Answer plantilla(String key_client) throws RemoteException {
+        Answer answer = new Answer();
+        if(key_client.equals(key_server))
+            answer = Method.plantilla();
+        else
+            answer.setError(Data.AUTENTICATION_FAILED);
+		return answer;
 	}
 	public Answer repertorio(byte minimum) throws RemoteException {
 		return Method.repertorio(minimum);

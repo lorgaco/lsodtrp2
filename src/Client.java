@@ -28,7 +28,7 @@ public class Client {
 		}
 		
 		//TODO store key
-		Key="clave";
+		Key = "clave";
 		
 		BufferedReader brComand = new BufferedReader(new InputStreamReader(System.in));
 		while(true){
@@ -49,7 +49,7 @@ public class Client {
 								designation = designation + " " + strComand[i].toString();
 							}
 							int maximum = Integer.parseInt(strComand[strComand.length-1]);
-							Answer result = ModuleRMI.nuevo(designation, maximum);
+							Answer result = ModuleRMI.nuevo(designation, maximum, Key);
 							System.out.println(result);
 						}
 					}
@@ -57,7 +57,7 @@ public class Client {
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
 							short code = Short.parseShort(strComand[1].toString());
-							Answer result = ModuleRMI.quita(code);
+							Answer result = ModuleRMI.quita(code, Key);
 							System.out.println(result);
 						}
 					}
@@ -71,7 +71,7 @@ public class Client {
 						}
 					}
 					else if(method.equals("PLANTILLA")){
-						Answer result = ModuleRMI.plantilla();
+						Answer result = ModuleRMI.plantilla(Key);
 						System.out.println(result);
 					}
 					else if(method.equals("REPERTORIO")){

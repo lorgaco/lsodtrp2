@@ -13,7 +13,7 @@ public class Server {
 		    try {
                 if(args.length>2) {
                     if(args[1].equals("-k") || args[1].equals("-K")) {
-                        Key=args[2];
+                        Key = args[2];
                         System.out.println("Admin key: " + Key);
                     }
                 }
