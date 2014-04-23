@@ -20,5 +20,5 @@ echo javac -d ../bin Server.java
 javac -d ../bin Server.java
 echo rmic -d ../bin ServantRMI
 rmic -d ../bin ServantRMI
-cp -f all.policy ../bin
+cp -f policy.all ../bin
 
