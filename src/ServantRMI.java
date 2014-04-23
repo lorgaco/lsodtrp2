@@ -4,7 +4,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class ServantRMI extends UnicastRemoteObject implements InterfaceRMI{
 	Methods Method;
 
-	public ServantRMI(String name) throws RemoteException {
+	public ServantRMI(String name, String Key) throws RemoteException {
 		super();
 		try {
 			Naming.rebind(name, this);

@@ -15,6 +15,12 @@ public class Client {
 		}
 		else{
 			try {
+                if(args.length>2) {
+                    if(args[1].equals("-k") || args[1].equals("-K")) {
+                        Key=args[2];
+                        System.out.println("Admin key: " + Key);
+                    }
+                }
 				ModuleRMI = (InterfaceRMI)Naming.lookup("rmi://" + args[0] + ":" + Data.PORT + "/serverRMI");
 			} catch(Exception e) {
 				System.err.println("Excepción de Sistema: " + e);
