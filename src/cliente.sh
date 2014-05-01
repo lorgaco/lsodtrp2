@@ -10,4 +10,4 @@ end-of-help-message
 exit(-1)
 endif
 setenv CLASSPATH ../bin
-java -Djava.security.policy=policy.all Client $1
+java -Djava.security.policy=policy.all Client $1 -k 0

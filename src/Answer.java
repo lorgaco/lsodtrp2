@@ -1,9 +1,10 @@
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 
-public class Answer {
+public class Answer implements Serializable{
 	private int error;
 	private int server_error;
 	private String answer;
