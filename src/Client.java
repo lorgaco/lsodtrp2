@@ -39,7 +39,8 @@ public class Client {
                 else{
                     String method = Data.PromptToMethod(strComand[0].toString());
                     if(method.equals("NUEVO")){
-                        if(strComand.length<3) System.err.println("Not enough arguments");
+                        if(Key == null) System.out.println("No Key provided. This operation can only be done by Admin");
+                        else if(strComand.length<3) System.err.println("Not enough arguments");
                         else{
                             String designation = strComand[1].toString();
                             for(int i = 2; i < strComand.length-1; i++) {
@@ -66,7 +67,8 @@ public class Client {
                         }
                     }
                     else if(method.equals("QUITA")){
-                        if(strComand.length<2) System.err.println("Not enough arguments");
+                        if(Key == null) System.out.println("No Key provided. This operation can only be done by Admin");
+                        else if(strComand.length<2) System.err.println("Not enough arguments");
                         else{
                             try {
                                 short code = Short.parseShort(strComand[1].toString());
@@ -111,18 +113,21 @@ public class Client {
                         }
                     }
                     else if(method.equals("PLANTILLA")){
-                        Answer Response = ModuleRMI.plantilla(Key);
-                        int iError = Response.getError();
-                        int iServerError = Response.getServer_error();
-                        String sResponse = Response.getAnswer();
-                        if(iError!=Data.OK  || iServerError!=Data.OK) {
-                            System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                            System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
-                        }
+                        if(Key == null) System.out.println("No Key provided. This operation can only be done by Admin");
                         else {
-                            String[] aResponse = sResponse.split("(, )|\\]|\\[");
-                            for(int ii=0; ii<aResponse.length; ii++){
-                                System.out.println(aResponse[ii]);
+                            Answer Response = ModuleRMI.plantilla(Key);
+                            int iError = Response.getError();
+                            int iServerError = Response.getServer_error();
+                            String sResponse = Response.getAnswer();
+                            if(iError!=Data.OK  || iServerError!=Data.OK) {
+                                System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
+                                System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
+                            }
+                            else {
+                                String[] aResponse = sResponse.split("(, )|\\]|\\[");
+                                for(int ii=0; ii<aResponse.length; ii++){
+                                    System.out.println(aResponse[ii]);
+                                }
                             }
                         }
                     }
