@@ -48,17 +48,28 @@ public class Client {
 							for(int i = 2; i < strComand.length-1; i++) {
 								designation = designation + " " + strComand[i].toString();
 							}
-							int maximum = Integer.parseInt(strComand[strComand.length-1]);
-							Answer result = ModuleRMI.nuevo(designation, maximum, Key);
-							System.out.println(result);
+                            if(designation.length() > 30) System.err.println("FORMAT ERROR > 30 characters");
+                            else {
+                                try {
+                                    int maximum = Integer.parseInt(strComand[strComand.length - 1]);
+                                    Answer result = ModuleRMI.nuevo(designation, maximum, Key);
+                                    System.out.println(result);
+                                } catch (Exception e) {
+                                    System.err.println("FORMAT ERROR: " + e.getMessage());
+                                }
+                            }
 						}
 					}
 					else if(method.equals("QUITA")){
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
-							short code = Short.parseShort(strComand[1].toString());
-							Answer result = ModuleRMI.quita(code, Key);
-							System.out.println(result);
+                            try {
+                                short code = Short.parseShort(strComand[1].toString());
+                                Answer result = ModuleRMI.quita(code, Key);
+                                System.out.println(result);
+                            } catch (Exception e) {
+                                System.err.println("FORMAT ERROR: " + e.getMessage());
+                            }
 						}
 					}
 					else if(method.equals("INSCRIBE")){
@@ -66,8 +77,12 @@ public class Client {
 						else{
 							String name = strComand[1].toString();
 							String alias = strComand[2].toString();
-							Answer result = ModuleRMI.inscribe(name, alias);
-							System.out.println(result);
+                            if(name.length() > 48) System.err.println("FORMAT ERROR > 48 characters");
+                            else if(alias.length() > 8) System.err.println("FORMAT ERROR > 8 characters");
+                            else {
+                                Answer result = ModuleRMI.inscribe(name, alias);
+                                System.out.println(result);
+                            }
 						}
 					}
 					else if(method.equals("PLANTILLA")){
@@ -77,35 +92,51 @@ public class Client {
 					else if(method.equals("REPERTORIO")){
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
-							byte minimum = Byte.parseByte(strComand[1].toString());
-							Answer result = ModuleRMI.repertorio(minimum);
-							System.out.println(result);
+                            try {
+                                byte minimum = Byte.parseByte(strComand[1].toString());
+                                Answer result = ModuleRMI.repertorio(minimum);
+                                System.out.println(result);
+                            } catch (Exception e) {
+                                System.err.println("FORMAT ERROR: " + e.getMessage());
+                            }
 						}
 					}
 					else if(method.equals("JUEGA")){
 						if(strComand.length<3) System.err.println("Not enough arguments");
 						else{
 							String alias = strComand[1].toString();
-							short code = Short.parseShort(strComand[2].toString());
-							Answer result = ModuleRMI.juega(alias, code);
-							System.out.println(result);
+                            try {
+                                short code = Short.parseShort(strComand[2].toString());
+                                Answer result = ModuleRMI.juega(alias, code);
+                                System.out.println(result);
+                            } catch (Exception e) {
+                                System.err.println("FORMAT ERROR: " + e.getMessage());
+                            }
 						}
 					}
 					else if(method.equals("TERMINA")){
 						if(strComand.length<3) System.err.println("Not enough arguments");
 						else{
 							String alias = strComand[1].toString();
-							short code = Short.parseShort(strComand[2].toString());
-							Answer result = ModuleRMI.termina(alias, code);
-							System.out.println(result);
+                            try {
+                                short code = Short.parseShort(strComand[2].toString());
+                                Answer result = ModuleRMI.termina(alias, code);
+                                System.out.println(result);
+                            } catch (Exception e) {
+                                System.err.println("FORMAT ERROR: " + e.getMessage());
+                            }
 						}
 					}
 					else if(method.equals("LISTA")){
 						if(strComand.length<2) System.err.println("Not enough arguments");
 						else{
-							short code = Short.parseShort(strComand[1].toString());
-							Answer result = ModuleRMI.lista(code);
-							System.out.println(result);
+                            try {
+                                short code = Short.parseShort(strComand[1].toString());
+                                Answer result = ModuleRMI.lista(code);
+                                System.out.println(result);
+                            } catch (Exception e) {
+                                System.err.println("FORMAT ERROR: " + e.getMessage());
+                            }
 						}
 					}
 					else if(method.equals("FINAL")){
