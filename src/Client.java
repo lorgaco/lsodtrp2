@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.rmi.*;
+import java.util.List;
+import java.util.ListIterator;
 
 public class Client {
 
@@ -39,6 +41,7 @@ public class Client {
                 else{
                     String method = Data.PromptToMethod(strComand[0].toString());
                     if(method.equals("NUEVO")){
+                        System.out.println("NUEVO");
                         if(Key == null) System.out.println("No Key provided. This operation can only be done by Admin");
                         else if(strComand.length<3) System.err.println("Not enough arguments");
                         else{
@@ -50,15 +53,14 @@ public class Client {
                             else {
                                 try {
                                     int maximum = Integer.parseInt(strComand[strComand.length - 1]);
-                                    Answer Response = ModuleRMI.nuevo(designation, maximum, Key);
-                                    int iError = Response.getError();
-                                    int iServerError = Response.getServer_error();
-                                    String sResponse = Response.getAnswer();
-                                    if (iError != Data.OK || iServerError != Data.OK) {
+                                    AnswerNuevo Response = ModuleRMI.nuevo(designation, maximum, Key);
+                                    int iServerError = Response.server_error;
+                                    sNuevo resultado = Response.answer;
+                                    if (resultado.error != Data.OK || iServerError != Data.OK) {
                                         System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                        System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
+                                        System.err.println("METHOD ERROR: " + Data.ErrorToString(resultado.error));
                                     } else {
-                                        System.out.println("Juego creado con id " + sResponse);
+                                        System.out.println("Juego creado con id " + resultado.code);
                                     }
                                 } catch (Exception e) {
                                     System.err.println("FORMAT ERROR: " + e.getMessage());
@@ -67,17 +69,18 @@ public class Client {
                         }
                     }
                     else if(method.equals("QUITA")){
+                        System.out.println("QUITA");
                         if(Key == null) System.out.println("No Key provided. This operation can only be done by Admin");
                         else if(strComand.length<2) System.err.println("Not enough arguments");
                         else{
                             try {
                                 short code = Short.parseShort(strComand[1].toString());
-                                Answer Response = ModuleRMI.quita(code, Key);
-                                int iError = Response.getError();
-                                int iServerError = Response.getServer_error();
-                                if(iError!=Data.OK  || iServerError!=Data.OK) {
+                                AnswerInt Response = ModuleRMI.quita(code, Key);
+                                int iServerError = Response.server_error;
+                                int resultado = Response.answer;
+                                if(resultado!=Data.OK  || iServerError!=Data.OK) {
                                     System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
+                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(resultado));
                                 }
                                 else {
                                     System.out.println("Juego eliminado");
@@ -88,6 +91,7 @@ public class Client {
                         }
                     }
                     else if(method.equals("INSCRIBE")){
+                        System.out.println("INSCRIBE");
                         if(strComand.length<3) System.err.println("Not enough arguments");
                         else{
                             String name = strComand[1].toString();
@@ -99,13 +103,14 @@ public class Client {
                                 String alias = strComand[strComand.length - 1].toString();
                                 if(alias.length() > 8) System.err.println("FORMAT ERROR > 8 characters");
                                 else {
-                                    Answer Response = ModuleRMI.inscribe(name, alias);
-                                    int iError = Response.getError();
-                                    int iServerError = Response.getServer_error();
-                                    if (iError != Data.OK || iServerError != Data.OK) {
+                                    AnswerInt Response = ModuleRMI.inscribe(name, alias);
+                                    int iServerError = Response.server_error;
+                                    int resultado = Response.answer;
+                                    if(resultado!=Data.OK  || iServerError!=Data.OK) {
                                         System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                        System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
-                                    } else {
+                                        System.err.println("METHOD ERROR: " + Data.ErrorToString(resultado));
+                                    }
+                                    else {
                                         System.out.println("Inscrito");
                                     }
                                 }
@@ -113,41 +118,41 @@ public class Client {
                         }
                     }
                     else if(method.equals("PLANTILLA")){
+                        System.out.println("PLANTILLA");
                         if(Key == null) System.out.println("No Key provided. This operation can only be done by Admin");
                         else {
-                            Answer Response = ModuleRMI.plantilla(Key);
-                            int iError = Response.getError();
-                            int iServerError = Response.getServer_error();
-                            String sResponse = Response.getAnswer();
-                            if(iError!=Data.OK  || iServerError!=Data.OK) {
+                            AnswerPlantilla Response = ModuleRMI.plantilla(Key);
+                            int iServerError = Response.server_error;
+                            List<Jugador> resultado = Response.answer;
+                            if(iServerError!=Data.OK) {
                                 System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
                             }
                             else {
-                                String[] aResponse = sResponse.split("(, )|\\]|\\[");
-                                for(int ii=0; ii<aResponse.length; ii++){
-                                    System.out.println(aResponse[ii]);
+                                ListIterator<Jugador> it = resultado.listIterator();
+                                for(int ii=0; ii<resultado.size(); ii++) {
+                                    Jugador player = it.next();
+                                    System.out.println(player.name + " (" + player.alias + ").");
                                 }
                             }
                         }
                     }
                     else if(method.equals("REPERTORIO")){
+                        System.out.println("REPERTORIO");
                         if(strComand.length<2) System.err.println("Not enough arguments");
                         else{
                             try {
                                 byte minimum = Byte.parseByte(strComand[1].toString());
-                                Answer Response = ModuleRMI.repertorio(minimum);
-                                int iError = Response.getError();
-                                int iServerError = Response.getServer_error();
-                                String sResponse = Response.getAnswer();
-                                if(iError!=Data.OK  || iServerError!=Data.OK) {
+                                AnswerRepertorio Response = ModuleRMI.repertorio(minimum);
+                                int iServerError = Response.server_error;
+                                List<Juego> resultado = Response.answer;
+                                if(iServerError!=Data.OK) {
                                     System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
                                 }
                                 else {
-                                    String[] aResponse = sResponse.split("(, )|\\]|\\[");
-                                    for(int ii=0; ii<aResponse.length; ii++){
-                                        System.out.println(aResponse[ii]);
+                                    ListIterator<Juego> it = resultado.listIterator();
+                                    for(int ii=0; ii<resultado.size(); ii++) {
+                                        Juego game = it.next();
+                                        System.out.println(game.designation + " (" + game.code + "): Max=" + game.maximum + ".");
                                     }
                                 }
                             } catch (Exception e) {
@@ -156,17 +161,18 @@ public class Client {
                         }
                     }
                     else if(method.equals("JUEGA")){
+                        System.out.println("JUEGA");
                         if(strComand.length<3) System.err.println("Not enough arguments");
                         else{
                             String alias = strComand[1].toString();
                             try {
                                 short code = Short.parseShort(strComand[2].toString());
-                                Answer Response = ModuleRMI.juega(alias, code);
-                                int iError = Response.getError();
-                                int iServerError = Response.getServer_error();
-                                if(iError!=Data.OK  || iServerError!=Data.OK) {
+                                AnswerInt Response = ModuleRMI.juega(alias, code);
+                                int iServerError = Response.server_error;
+                                int resultado = Response.answer;
+                                if(resultado!=Data.OK  || iServerError!=Data.OK) {
                                     System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
+                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(resultado));
                                 }
                                 else {
                                     System.out.println("jugando");
@@ -177,17 +183,18 @@ public class Client {
                         }
                     }
                     else if(method.equals("TERMINA")){
+                        System.out.println("TERMINA");
                         if(strComand.length<3) System.err.println("Not enough arguments");
                         else{
                             String alias = strComand[1].toString();
                             try {
                                 short code = Short.parseShort(strComand[2].toString());
-                                Answer Response = ModuleRMI.termina(alias, code);
-                                int iError = Response.getError();
-                                int iServerError = Response.getServer_error();
-                                if(iError!=Data.OK  || iServerError!=Data.OK) {
+                                AnswerInt Response = ModuleRMI.termina(alias, code);
+                                int iServerError = Response.server_error;
+                                int resultado = Response.answer;
+                                if(resultado!=Data.OK  || iServerError!=Data.OK) {
                                     System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
+                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(resultado));
                                 }
                                 else {
                                     System.out.println("Desconectado");
@@ -198,22 +205,23 @@ public class Client {
                         }
                     }
                     else if(method.equals("LISTA")){
+                        System.out.println("LISTA");
                         if(strComand.length<2) System.err.println("Not enough arguments");
                         else{
                             try {
                                 short code = Short.parseShort(strComand[1].toString());
-                                Answer Response = ModuleRMI.lista(code);
-                                int iError = Response.getError();
-                                int iServerError = Response.getServer_error();
-                                String sResponse = Response.getAnswer();
-                                if(iError!=Data.OK  || iServerError!=Data.OK) {
+                                AnswerLista Response = ModuleRMI.lista(code);
+                                int iServerError = Response.server_error;
+                                sLista resultado = Response.answer;
+                                if(resultado.error!=Data.OK  || iServerError!=Data.OK) {
                                     System.err.println("SERVER ERROR: " + Data.ErrorToString(iServerError));
-                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(iError));
+                                    System.err.println("METHOD ERROR: " + Data.ErrorToString(resultado.error));
                                 }
                                 else {
-                                    String[] aResponse = sResponse.split("(, )|\\]|\\[");
-                                    for(int ii=0; ii<aResponse.length; ii++){
-                                        System.out.println(aResponse[ii]);
+                                    ListIterator<Jugador> it = resultado.lista.listIterator();
+                                    for(int ii=0; ii<resultado.lista.size(); ii++) {
+                                        Jugador player = it.next();
+                                        System.out.println(player.name + " (" + player.alias + ").");
                                     }
                                 }
                             } catch (Exception e) {

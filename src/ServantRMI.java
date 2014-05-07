@@ -1,5 +1,7 @@
 import java.rmi.*;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServantRMI extends UnicastRemoteObject implements InterfaceRMI{
 	Methods Method;
@@ -16,43 +18,73 @@ public class ServantRMI extends UnicastRemoteObject implements InterfaceRMI{
 		Method = new Methods();
         key_server = Key;
 	}
-	public Answer nuevo(String designation, int maximum, String key_client) throws RemoteException {
-        Answer answer = new Answer();
-        if(key_client.equals(key_server))
-            answer = Method.nuevo(designation, maximum);
-        else
-            answer.setError(Data.AUTENTICATION_FAILED);
-		return answer;
+	public AnswerNuevo nuevo(String designation, int maximum, String key_client) throws RemoteException {
+        AnswerNuevo out = new AnswerNuevo();
+        if(key_client.equals(key_server)){
+            out.server_error = Data.OK;
+            out.answer = Method.nuevo(designation, maximum);
+            return out;
+        }
+        else {
+            out.server_error = Data.AUTENTICATION_FAILED;
+            out.answer = new sNuevo();
+            return out;
+        }
 	}
-	public Answer quita(short code, String key_client) throws RemoteException {
-        Answer answer = new Answer();
-        if(key_client.equals(key_server))
-            answer = Method.quita(code);
-        else
-            answer.setError(Data.AUTENTICATION_FAILED);
-		return answer;
+	public AnswerInt quita(short code, String key_client) throws RemoteException {
+        AnswerInt out = new AnswerInt();
+        if(key_client.equals(key_server)){
+            out.server_error = Data.OK;
+            out.answer = Method.quita(code);
+            return out;
+        }
+        else {
+            out.server_error = Data.AUTENTICATION_FAILED;
+            out.answer = 0;
+            return out;
+        }
 	}
-	public Answer inscribe(String name, String alias) throws RemoteException {
-		return Method.inscribe(name, alias);
+	public AnswerInt inscribe(String name, String alias) throws RemoteException {
+        AnswerInt out = new AnswerInt();
+        out.server_error = Data.OK;
+        out.answer = Method.inscribe(name, alias);
+        return out;
 	}
-	public Answer plantilla(String key_client) throws RemoteException {
-        Answer answer = new Answer();
-        if(key_client.equals(key_server))
-            answer = Method.plantilla();
-        else
-            answer.setError(Data.AUTENTICATION_FAILED);
-		return answer;
+	public AnswerPlantilla plantilla(String key_client) throws RemoteException {
+        AnswerPlantilla out = new AnswerPlantilla();
+        if(key_client.equals(key_server)){
+            out.server_error = Data.OK;
+            out.answer = Method.plantilla();
+            return out;
+        }
+        else {
+            out.server_error = Data.AUTENTICATION_FAILED;
+            out.answer = new ArrayList<Jugador>();
+            return out;
+        }
 	}
-	public Answer repertorio(byte minimum) throws RemoteException {
-		return Method.repertorio(minimum);
+	public AnswerRepertorio repertorio(byte minimum) throws RemoteException {
+        AnswerRepertorio out = new AnswerRepertorio();
+        out.server_error = Data.OK;
+        out.answer = Method.repertorio(minimum);
+        return out;
 	}
-	public Answer juega(String alias, short code) throws RemoteException {
-		return Method.juega(alias, code);
+	public AnswerInt juega(String alias, short code) throws RemoteException {
+        AnswerInt out = new AnswerInt();
+        out.server_error = Data.OK;
+        out.answer = Method.juega(alias, code);
+        return out;
 	}
-	public Answer termina(String alias, short code) throws RemoteException {
-		return Method.termina(alias, code);
+	public AnswerInt termina(String alias, short code) throws RemoteException {
+        AnswerInt out = new AnswerInt();
+        out.server_error = Data.OK;
+        out.answer = Method.termina(alias, code);
+        return out;
 	}
-	public Answer lista(short code) throws RemoteException {
-		return Method.lista(code);
+	public AnswerLista lista(short code) throws RemoteException {
+        AnswerLista out = new AnswerLista();
+        out.server_error = Data.OK;
+        out.answer = Method.lista(code);
+        return out;
 	}
 }

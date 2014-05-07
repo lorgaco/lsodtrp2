@@ -4,8 +4,8 @@ public class Data {
 	public static final int PORT = 4005;
 	public static final int MAX_ARGUMENTS_SIZE = 8000;
 	public static final int MAX_MESSAGE_SIZE = MAX_ARGUMENTS_SIZE + 16; // 4 ints
-	public static final int SOCKET_TIMEOUT = 1000; // in milliseconds
-	public static final int SOCKET_RTX_PERIOD = 100; // in milliseconds
+	public static final int SOCKET_TIMEOUT = 50000; // in milliseconds
+	public static final int SOCKET_RTX_PERIOD = 2000; // in milliseconds
 	
 	// Local response codes
 	public static final int OK =0;
@@ -33,11 +33,6 @@ public class Data {
 	public static final int JUEGA = 6;
 	public static final int TERMINA = 7;
 	public static final int LISTA = 8;
-	
-	// File paths
-	public static final String PATH_JUEGOS = "/bd/juegos.txt";
-	public static final String PATH_JUGADORES = "/bd";
-	public static final String PATH_PLAYING = "";
 
 	public static String ErrorToString(int error){
 		switch(error) {
