@@ -1,3 +1,5 @@
+import java.util.Comparator;
+import java.util.List;
 
 public class Data {
 	// socket and message parameters
@@ -75,4 +77,40 @@ public class Data {
 			return "FINAL";
 		return "UNKNOWN";
 	}
+}
+
+class Juego {
+    short code;
+    String designation;
+    int maximum;
+    List<Jugador> Jugando;
+}
+
+class Jugador {
+    String name;
+    String alias;
+}
+
+class sNuevo {
+    short code;
+    int error;
+}
+
+class sLista {
+    List<Jugador> lista;
+    int error;
+}
+
+class gameComparator implements Comparator<Juego> {
+    @Override
+    public int compare(Juego o1, Juego o2) {
+        return o1.designation.compareTo(o2.designation);
+    }
+}
+
+class playerComparator implements Comparator<Jugador> {
+    @Override
+    public int compare(Jugador o1, Jugador o2) {
+        return o1.alias.compareTo(o2.alias);
+    }
 }
