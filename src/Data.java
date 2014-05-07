@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -79,24 +80,24 @@ public class Data {
 	}
 }
 
-class Juego {
+class Juego implements Serializable {
     short code;
     String designation;
     int maximum;
     List<Jugador> Jugando;
 }
 
-class Jugador {
+class Jugador implements Serializable {
     String name;
     String alias;
 }
 
-class sNuevo {
+class sNuevo implements Serializable {
     short code;
     int error;
 }
 
-class sLista {
+class sLista implements Serializable {
     List<Jugador> lista;
     int error;
 }
